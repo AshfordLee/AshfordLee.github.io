@@ -11,20 +11,22 @@
     li{margin-bottom:.3rem;}
     a{color:#0070c9;text-decoration:none;}
     a:hover{text-decoration:underline;}
-    .name{font-size:1.6rem;font-weight:bold;}
+    .name{font-size:2rem;font-weight:bold;}
     .subtitle{font-size:1.1rem;color:#555;}
     .section{margin-bottom:1.5rem;}
     .profile-photo {
-      width: 230px;
-      height: 230px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       object-fit: cover;
-      margin-right: 0.8rem;
+      margin-left: 0.8rem;
       align-self: center;
     }
     header {
       display: flex;
-      align-items: center;
+      /* align-items: center; */
+      align-items: flex-start;
+      flex-direction: row;
     }
     .header-content {
       flex: 1;
@@ -33,16 +35,20 @@
 </head>
 <body>
   <header class="section">
-    <img src="image/photo2.JPG" alt="Tingjia Cao" class="profile-photo">
     <div class='header-content'>
+      <br>
       <div class='name'>Tingjia Cao (庭嘉)</div>
-      <div class='subtitle'>Ph.D. Student, The ADvanced Systems Laboratory (ADSL), UW–Madison</div>
+      <div class='subtitle'>Ph.D. Student</div>
+      <div class='subtitle'>Department of Computer Sciences, University of Wisconsin-Madison</div>
+      <div class='subtitle'>The ADvanced Systems Laboratory (ADSL)</div>
       
+    </div>
+    <img src="image/photo2.JPG" alt="Tingjia Cao" class="profile-photo">
+  </header> 
       <p style="text-align: justify">Hello and welcome to my personal website! I'm Tingjia Cao, a PhD student in the Computer Science Department at the University of Wisconsin-Madison, working in ADSL with Professors <a href='https://pages.cs.wisc.edu/~dusseau/'>Andrea</a> and <a href='https://pages.cs.wisc.edu/~remzi/'>Remzi</a> Arpaci‑Dusseau.
       <br>My research focuses on making cloud platforms faster and more resource‑efficient. Broadly, I am interested in operating systems, storage systems, and cloud computing.</p>  
       <p style="text-align: justify">Contact me at tcao34 AT wisc.edu !</p>
-    </div>
-  </header>
+
 
   <section class='section'>
     <h2>📚 Publications</h2>
@@ -73,7 +79,7 @@
   <section class='section'>
     <h2>🔍 Service</h2>
     <ul>
-      <li>Artifact Evaluation Committee, <em>OSDI ’25</em></li>
+      <li>Artifact Evaluation Committee, <em>OSDI '25</em></li>
     </ul>
   </section>
 
