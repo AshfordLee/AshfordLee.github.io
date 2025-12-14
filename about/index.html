@@ -32,4 +32,42 @@ window.config = {
 	SUNRAYS: true,
 	SUNRAYS_RESOLUTION: 196,
 	SUNRAYS_WEIGHT: 1.0,
-}</script><script src="../js/main.js"></script><script src="../js/background.js"></script></body></html>
+}</script><script src="../js/main.js"></script><script src="../js/background.js"></script><script>// 自动显示 about 页面内容
+(function() {
+	function initAboutPage() {
+		const cardInner = document.querySelector('.card-inner');
+		if (cardInner && !cardInner.classList.contains('in')) {
+			cardInner.classList.add('in');
+		}
+		
+		// 初始化网格背景
+		const canvas = document.getElementById('gridCanvas');
+		if (canvas && typeof GridAnimation !== 'undefined') {
+			const isPhone = /Mobile|Android|iOS|iPhone|iPad|iPod|Windows Phone|KFAPWI/i.test(navigator.userAgent);
+			const gridAnimation = new GridAnimation(canvas, {
+				direction: 'diagonal',
+				speed: isPhone ? 0.03 : 0.05,
+				borderColor: isPhone ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)',
+				squareSize: isPhone ? 50 : 40,
+				hoverFillColor: 'rgba(255, 255, 255, 0.8)',
+				hoverShadowColor: 'rgba(255, 255, 255, 0.8)',
+				transitionDuration: isPhone ? 150 : 200,
+				trailDuration: isPhone ? 2000 : 1500,
+				specialBlockColor: 'rgba(100, 255, 152, 0.8)',
+				specialHoverColor: 'rgba(29, 202, 29, 0.8)',
+				snakeHeadColor: 'rgba(255, 255, 255, 0.95)',
+				snakeTailColor: 'rgba(218, 231, 255, 0.25)',
+				snakeColorDecay: 0.85,
+				touchSensitivity: isPhone ? 1.2 : 1.0,
+				vibrationEnabled: isPhone
+			});
+			gridAnimation.init();
+		}
+	}
+	
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initAboutPage);
+	} else {
+		setTimeout(initAboutPage, 100);
+	}
+})();</script></body></html>
