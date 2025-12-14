@@ -32,42 +32,63 @@ window.config = {
 	SUNRAYS: true,
 	SUNRAYS_RESOLUTION: 196,
 	SUNRAYS_WEIGHT: 1.0,
-}</script><script src="../js/main.js"></script><script src="../js/background.js"></script><script>// 自动显示 about 页面内容
+}</script><script src="../js/main.js"></script><script src="../js/background.js"></script><script>// 立即显示内容，不等待其他脚本
 (function() {
-	function initAboutPage() {
+	function showContent() {
 		const cardInner = document.querySelector('.card-inner');
-		if (cardInner && !cardInner.classList.contains('in')) {
+		if (cardInner) {
 			cardInner.classList.add('in');
-		}
-		
-		// 初始化网格背景
-		const canvas = document.getElementById('gridCanvas');
-		if (canvas && typeof GridAnimation !== 'undefined') {
-			const isPhone = /Mobile|Android|iOS|iPhone|iPad|iPod|Windows Phone|KFAPWI/i.test(navigator.userAgent);
-			const gridAnimation = new GridAnimation(canvas, {
-				direction: 'diagonal',
-				speed: isPhone ? 0.03 : 0.05,
-				borderColor: isPhone ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)',
-				squareSize: isPhone ? 50 : 40,
-				hoverFillColor: 'rgba(255, 255, 255, 0.8)',
-				hoverShadowColor: 'rgba(255, 255, 255, 0.8)',
-				transitionDuration: isPhone ? 150 : 200,
-				trailDuration: isPhone ? 2000 : 1500,
-				specialBlockColor: 'rgba(100, 255, 152, 0.8)',
-				specialHoverColor: 'rgba(29, 202, 29, 0.8)',
-				snakeHeadColor: 'rgba(255, 255, 255, 0.95)',
-				snakeTailColor: 'rgba(218, 231, 255, 0.25)',
-				snakeColorDecay: 0.85,
-				touchSensitivity: isPhone ? 1.2 : 1.0,
-				vibrationEnabled: isPhone
-			});
-			gridAnimation.init();
 		}
 	}
 	
+	// 立即执行，不等待
 	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initAboutPage);
+		document.addEventListener('DOMContentLoaded', showContent);
 	} else {
-		setTimeout(initAboutPage, 100);
+		showContent();
+	}
+})();
+
+// 等待 main.js 加载完成后再初始化网格
+(function() {
+	function initGrid() {
+		const canvas = document.getElementById('gridCanvas');
+		if (!canvas) return;
+		
+		// 检查 GridAnimation 是否已定义
+		if (typeof GridAnimation === 'undefined') {
+			// 如果还没定义，等待一下再试
+			setTimeout(initGrid, 100);
+			return;
+		}
+		
+		const isPhone = /Mobile|Android|iOS|iPhone|iPad|iPod|Windows Phone|KFAPWI/i.test(navigator.userAgent);
+		const gridAnimation = new GridAnimation(canvas, {
+			direction: 'diagonal',
+			speed: isPhone ? 0.03 : 0.05,
+			borderColor: isPhone ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)',
+			squareSize: isPhone ? 50 : 40,
+			hoverFillColor: 'rgba(255, 255, 255, 0.8)',
+			hoverShadowColor: 'rgba(255, 255, 255, 0.8)',
+			transitionDuration: isPhone ? 150 : 200,
+			trailDuration: isPhone ? 2000 : 1500,
+			specialBlockColor: 'rgba(100, 255, 152, 0.8)',
+			specialHoverColor: 'rgba(29, 202, 29, 0.8)',
+			snakeHeadColor: 'rgba(255, 255, 255, 0.95)',
+			snakeTailColor: 'rgba(218, 231, 255, 0.25)',
+			snakeColorDecay: 0.85,
+			touchSensitivity: isPhone ? 1.2 : 1.0,
+			vibrationEnabled: isPhone
+		});
+		gridAnimation.init();
+	}
+	
+	// 等待页面和脚本加载
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', function() {
+			setTimeout(initGrid, 200);
+		});
+	} else {
+		setTimeout(initGrid, 200);
 	}
 })();</script></body></html>
